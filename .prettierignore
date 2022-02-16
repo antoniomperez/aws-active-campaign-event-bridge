@@ -1,0 +1,7 @@
+node_module
+.vscode
+/.husky
+cdk.out
+
+# Version Control
+CHANGELOG.md
