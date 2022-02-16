@@ -1,6 +1,6 @@
 {
-  "name": "aws-cdk-template",
-  "version": "1.1.2",
+  "name": "aws-active-campaign-eventbridge",
+  "version": "1.0.0",
   "bin": {
     "aws-cdk-template": "bin/aws-cdk-template.js"
   },

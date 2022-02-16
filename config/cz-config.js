@@ -32,7 +32,13 @@ module.exports = {
     { value: 'WIP', name: 'WIP:      Work in progress' },
   ],
 
-  scopes: [{ name: 'Github Actions' }],
+  scopes: [
+    { name: 'pipeline' },
+    { name: 'vpc' },
+    { name: 'apigateway' },
+    { name: 'lambda' },
+    { name: 'eventbridge' },
+  ],
 
   allowTicketNumber: true,
   isTicketNumberRequired: false,
