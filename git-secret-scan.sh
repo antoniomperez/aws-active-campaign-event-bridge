@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+#set -euo pipefail
 
 mkdir -p .tools
 [[ ! -d .tools/git-secrets ]] && {
