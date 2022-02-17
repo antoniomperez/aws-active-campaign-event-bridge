@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   secrets-manager:
-    GITHUB: $GITHUB_TOKEN
+    GITHUB: arn:aws:secretsmanager:eu-central-1:717554335089:secret:github-token-sfJZ8f
   git-credential-helper: yes
 
 phases:
