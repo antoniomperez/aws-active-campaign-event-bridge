@@ -58,6 +58,11 @@ export class PipelineStack extends Stack {
             buildSpec: BuildSpec.fromSourceFilename(
               `build-specs/${this.stackName}-build-spec.yml`
             ),
+            environmentVariables: {
+              GITHUB: {
+                value: SecretValue.secretsManager('github-token'),
+              },
+            },
           }),
         }),
       ],
