@@ -6,12 +6,13 @@ env:
 phases:
   install:
     commands:
-      - npm install -g npm
-      - yarn install
+      - npm install -g npm || npm -g install yarn
+      - yarn install --frozen-lockfile
   build:
     commands:
       - yarn test
       - yarn cdk synthesize ActiveCampaignPipelineTestStack
+      - /bin/bash ./git-secret-scan.sh
       - yarn bump
       - git push --follow-tags origin v1-main
 
