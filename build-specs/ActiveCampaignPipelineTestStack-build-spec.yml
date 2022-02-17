@@ -7,18 +7,18 @@ phases:
   install:
     commands:
       - npm -g install yarn || npm install -g npm
-      - git init --quiet
-      - git add -A .
+      # - git init --quiet
+      # - git add -A .
       - yarn install --frozen-lockfile
   pre_build:
     commands:
-      - git checkout v1-main
+      # - git checkout v1-main
   build:
     commands:
       - yarn test
       - yarn cdk synthesize ActiveCampaignPipelineTestStack
       - yarn bump
-      - git push --follow-tags origin v1-main
+      # - git push --follow-tags origin v1-main
 
 artifacts:
   base-directory: cdk.out
