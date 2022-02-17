@@ -1,26 +1,14 @@
 version: 0.2
 
-env:
-  secrets-manager:
-    GITHUB: arn:aws:secretsmanager:eu-central-1:717554335089:secret:github-token-sfJZ8f
-  git-credential-helper: yes
-
 phases:
   install:
     commands:
       - npm -g install yarn || npm install -g npm
-      - git status
-      # - git add -A .
       - yarn install --frozen-lockfile
-  pre_build:
-    commands:
-      # - git checkout v1-main
   build:
     commands:
       - yarn test
       - yarn cdk synthesize ActiveCampaignPipelineTestStack
-      # - yarn bump
-      # - git push --follow-tags origin v1-main
 
 artifacts:
   base-directory: cdk.out

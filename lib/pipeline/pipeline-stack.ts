@@ -1,11 +1,5 @@
 import { Construct } from 'constructs';
-import {
-  // eslint-disable-next-line camelcase
-  // aws_secretsmanager,
-  SecretValue,
-  Stack,
-  StackProps,
-} from 'aws-cdk-lib';
+import { SecretValue, Stack, StackProps } from 'aws-cdk-lib';
 import { Artifact, Pipeline } from 'aws-cdk-lib/aws-codepipeline';
 import {
   CloudFormationCreateUpdateStackAction,
@@ -58,13 +52,6 @@ export class PipelineStack extends Stack {
 
     this.cdkBuildOutput = new Artifact('cdkBuildOutput');
 
-    // eslint-disable-next-line camelcase
-    /* const githubSecret = aws_secretsmanager.Secret.fromSecretNameV2(
-      this,
-      'github-token',
-      'github-token'
-    );
- */
     this.pipeline.addStage({
       stageName: 'Build',
       actions: [
@@ -79,11 +66,6 @@ export class PipelineStack extends Stack {
             buildSpec: BuildSpec.fromSourceFilename(
               `build-specs/${this.stackName}-build-spec.yml`
             ),
-            /* environmentVariables: {
-              GITHUB_TOKEN: {
-                value: githubSecret,
-              },
-            }, */
           }),
         }),
       ],
