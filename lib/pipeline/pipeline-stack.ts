@@ -51,6 +51,12 @@ export class PipelineStack extends Stack {
           actionName: 'CDK_Build',
           input: sourceOutput,
           outputs: [cdkBuildOuyput],
+          checkSecretsInPlainTextEnvVariables: false,
+          environmentVariables: {
+            GITHUB: {
+              value: SecretValue.secretsManager('github-token'),
+            },
+          },
           project: new PipelineProject(this, 'CDKBuildProject', {
             environment: {
               buildImage: LinuxBuildImage.STANDARD_5_0,
@@ -58,11 +64,6 @@ export class PipelineStack extends Stack {
             buildSpec: BuildSpec.fromSourceFilename(
               `build-specs/${this.stackName}-build-spec.yml`
             ),
-            environmentVariables: {
-              GITHUB: {
-                value: SecretValue.secretsManager('github-token'),
-              },
-            },
           }),
         }),
       ],
