@@ -17,7 +17,7 @@ phases:
     commands:
       - yarn test
       - yarn cdk synthesize ActiveCampaignPipelineTestStack
-      - yarn bump
+      # - yarn bump
       # - git push --follow-tags origin v1-main
 
 artifacts:
