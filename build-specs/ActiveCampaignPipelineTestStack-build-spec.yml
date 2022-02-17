@@ -8,10 +8,11 @@ phases:
     commands:
       - npm install -g npm || npm -g install yarn
       - yarn install --frozen-lockfile
+      - git --version
   pre_build:
     commands:
-      - git remote add origin git@github.com:antoniomperez/aws-active-campaign-event-bridge.git
-      - git branch -M v1-main
+      - git init --quite
+      - git add -A .
   build:
     commands:
       - yarn test
