@@ -19,12 +19,16 @@ mkdir -p .tools
 # because of the .gitignore will exclude dependencies and generated files) and
 # then call 'git-secrets' as usual.
 git rev-parse --git-dir > /dev/null 2>&1 || {
+    echo "Initializating git repository"
     git init --quiet
     git add -A .
 }
 
 # AWS config needs to be added to this repository's config
+echo "Registering AWS"
 .tools/git-secrets/git-secrets --register-aws
+echo "Register Completed"
+
 
 .tools/git-secrets/git-secrets --scan
 echo "git-secrets scan ok"

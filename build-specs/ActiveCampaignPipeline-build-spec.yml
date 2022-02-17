@@ -5,11 +5,11 @@ phases:
     commands:
       - npm install -g npm || npm -g install yarn
       - yarn install --frozen-lockfile
+      - /bin/bash ./git-secret-scan.sh
   build:
     commands:
       - yarn test
       - yarn cdk synthesize ActiveCampaignPipelineTestStack
-      - /bin/bash ./git-secret-scan.sh
       - yarn bump
       - git push --follow-tags origin v1-main
 
