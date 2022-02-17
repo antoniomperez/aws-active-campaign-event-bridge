@@ -6,12 +6,13 @@ env:
 phases:
   install:
     commands:
-      - npm install -g npm || npm -g install yarn
+      - npm -g install yarn || npm install -g npm
+      - git init --quiet
+      - git add -A .
       - yarn install --frozen-lockfile
   pre_build:
     commands:
-      - git init --quiet
-      - git add -A .
+      - git checkout v1-main
   build:
     commands:
       - yarn test
