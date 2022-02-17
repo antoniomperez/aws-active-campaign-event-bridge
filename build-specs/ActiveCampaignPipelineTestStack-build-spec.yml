@@ -1,6 +1,8 @@
 version: 0.2
 
 env:
+  secret-manager:
+    GITHUB: $GITHUB_TOKEN
   git-credential-helper: yes
 
 phases:

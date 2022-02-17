@@ -37,6 +37,7 @@ export class PipelineStack extends Stack {
     this.pipeline = new Pipeline(this, 'ActiveCampaignPipeline', {
       pipelineName: this.stackName,
       crossAccountKeys: false,
+      restartExecutionOnUpdate: true,
     });
 
     this.sourceOutput = new Artifact('SoruceOutput');
@@ -60,7 +61,7 @@ export class PipelineStack extends Stack {
     // eslint-disable-next-line camelcase
     const githubSecret = aws_secretsmanager.Secret.fromSecretNameV2(
       this,
-      'SecretFromName',
+      'github-token',
       'github-token'
     );
 
@@ -79,7 +80,7 @@ export class PipelineStack extends Stack {
               `build-specs/${this.stackName}-build-spec.yml`
             ),
             environmentVariables: {
-              GITHUB: {
+              GITHUB_TOKEN: {
                 value: githubSecret,
               },
             },
