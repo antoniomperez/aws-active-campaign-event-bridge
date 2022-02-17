@@ -8,10 +8,9 @@ phases:
     commands:
       - npm install -g npm || npm -g install yarn
       - yarn install --frozen-lockfile
-      - git --version
   pre_build:
     commands:
-      - git init --quite
+      - git init --quiet
       - git add -A .
   build:
     commands:
