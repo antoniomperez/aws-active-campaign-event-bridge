@@ -1,11 +1,13 @@
 version: 0.2
 
+env:
+  git-credential-helper: yes
+
 phases:
   install:
     commands:
       - npm install -g npm || npm -g install yarn
       - yarn install --frozen-lockfile
-      # - /bin/bash ./git-secret-scan.sh
   pre_build:
     commands:
       - git remote add origin git@github.com:antoniomperez/aws-active-campaign-event-bridge.git
