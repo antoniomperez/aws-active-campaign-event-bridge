@@ -2,6 +2,7 @@ import { Construct } from 'constructs';
 import { SecretValue, Stack, StackProps } from 'aws-cdk-lib';
 import { Artifact, Pipeline } from 'aws-cdk-lib/aws-codepipeline';
 import {
+  CloudFormationCreateUpdateStackAction,
   CodeBuildAction,
   GitHubSourceAction,
 } from 'aws-cdk-lib/aws-codepipeline-actions';
@@ -18,17 +19,23 @@ interface PipelineStackProps extends StackProps {
 }
 
 export class PipelineStack extends Stack {
+  private readonly pipeline: Pipeline;
+
+  private readonly sourceOutput: Artifact;
+
+  private readonly cdkBuildOutput: Artifact;
+
   constructor(scope: Construct, id: string, props: PipelineStackProps) {
     super(scope, id, props);
 
-    const pipeline = new Pipeline(this, 'ActiveCampaignPipeline', {
+    this.pipeline = new Pipeline(this, 'ActiveCampaignPipeline', {
       pipelineName: this.stackName,
       crossAccountKeys: false,
     });
 
-    const sourceOutput = new Artifact('SoruceOutput');
+    this.sourceOutput = new Artifact('SoruceOutput');
 
-    pipeline.addStage({
+    this.pipeline.addStage({
       stageName: 'Source',
       actions: [
         new GitHubSourceAction({
@@ -37,20 +44,20 @@ export class PipelineStack extends Stack {
           branch: props.repositoryBranch,
           actionName: 'Pipeline_Source',
           oauthToken: SecretValue.secretsManager('github-token'),
-          output: sourceOutput,
+          output: this.sourceOutput,
         }),
       ],
     });
 
-    const cdkBuildOuyput = new Artifact('cdkBuildOutput');
+    this.cdkBuildOutput = new Artifact('cdkBuildOutput');
 
-    pipeline.addStage({
+    this.pipeline.addStage({
       stageName: 'Build',
       actions: [
         new CodeBuildAction({
           actionName: 'CDK_Build',
-          input: sourceOutput,
-          outputs: [cdkBuildOuyput],
+          input: this.sourceOutput,
+          outputs: [this.cdkBuildOutput],
           project: new PipelineProject(this, 'CDKBuildProject', {
             environment: {
               buildImage: LinuxBuildImage.STANDARD_5_0,
@@ -59,6 +66,20 @@ export class PipelineStack extends Stack {
               `build-specs/${this.stackName}-build-spec.yml`
             ),
           }),
+        }),
+      ],
+    });
+
+    this.pipeline.addStage({
+      stageName: 'Pipeline_Update',
+      actions: [
+        new CloudFormationCreateUpdateStackAction({
+          actionName: 'Pipeline_Update',
+          stackName: this.stackName,
+          templatePath: this.cdkBuildOutput.atPath(
+            `${this.stackName}.template.json`
+          ),
+          adminPermissions: true,
         }),
       ],
     });
