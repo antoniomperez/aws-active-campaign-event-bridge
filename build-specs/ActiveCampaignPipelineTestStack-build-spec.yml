@@ -1,7 +1,7 @@
 version: 0.2
 
 env:
-  secret-manager:
+  secrets-manager:
     GITHUB: $GITHUB_TOKEN
   git-credential-helper: yes
 
@@ -9,7 +9,7 @@ phases:
   install:
     commands:
       - npm -g install yarn || npm install -g npm
-      # - git init --quiet
+      - git status
       # - git add -A .
       - yarn install --frozen-lockfile
   pre_build:
