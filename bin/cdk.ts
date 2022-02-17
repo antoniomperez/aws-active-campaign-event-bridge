@@ -5,7 +5,7 @@ import { PipelineStack } from '../lib/pipeline/pipeline-stack';
 
 const app = new cdk.App();
 
-new PipelineStack(app, 'ActiveCampaignPipeline', {
+new PipelineStack(app, 'ActiveCampaignPipelineStack', {
   env: {
     region: 'eu-central-1',
     account: app.node.tryGetContext('PipelineTestDeploymentAccount'),

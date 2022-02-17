@@ -11,9 +11,9 @@ phases:
   build:
     commands:
       - yarn test
-      - yarn cdk synthesize PipelineTestStack
+      - yarn cdk synthesize ActiveCampaignPipeline
       - yarn bump
-      - git push --follow-tags origin develop
+      - git push --follow-tags origin v1-main
 
 artifacts:
   base-directory: cdk.out
